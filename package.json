@@ -16,5 +16,23 @@
   "license": "ISC",
   "devDependencies": {
     "uglify-js": "^3.4.9"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/qso.git"
+  },
+  "keywords": [
+    "css",
+    "selector",
+    "observer",
+    "dom"
+  ],
+  "bugs": {
+    "url": "https://github.com/WebReflection/qso/issues"
+  },
+  "homepage": "https://github.com/WebReflection/qso#readme"
 }
