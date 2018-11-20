@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>QuerySelectorObserver</title>
+  <script src="../min.js"></script>
+  <script>
+  this.onload = function () {
+    var count = 1;
+    var so = new QuerySelectorObserver(function (targets) {
+      for (var i = 0, length = targets.length; i < length; i++)
+        targets[i].textContent = 'Element ' + count++ + ' has been parsed!';
+    });
+    so.observe('.some-control');
+    window.so = so;
+
+    setTimeout(function(){
+      var div = document.createElement('div');
+      div.setAttribute('class', 'some-control');
+      document.getElementById('test').appendChild(div);
+      setTimeout(function () {
+        so.disconnect();
+      }, 100);
+    }, 1000);
+  };
+  </script>
+</head>
+<body>
+  <div id="test" class="some-control"></div>
+</body>
+</html>

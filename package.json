@@ -1,0 +1,20 @@
+{
+  "name": "qso",
+  "version": "0.0.0",
+  "description": "A MutationObserver like API for CSS selectors.",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "unpkg": "min.js",
+  "scripts": {
+    "build": "npm run cjs && npm run esm && npm run min && npm run size",
+    "cjs": "cp index.js cjs/ && echo 'module.exports = QuerySelectorObserver;' >> cjs/index.js",
+    "esm": "cp index.js esm/ && echo 'export default QuerySelectorObserver;' >> esm/index.js",
+    "min": "uglifyjs index.js --support-ie8 --comments=/^!/ -c -m -o min.js",
+    "size": "cat index.js | wc -c && cat min.js | wc -c && gzip -c9 min.js | wc -c && cat min.js | brotli | wc -c"
+  },
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "devDependencies": {
+    "uglify-js": "^3.4.9"
+  }
+}
