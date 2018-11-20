@@ -1,21 +1,11 @@
 /*! (c) Andrea Giammarchi - ISC */
 var QuerySelectorObserver = (function () {
-  var IE = typeof Reflect == typeof IE;
-  var I = 0;
-  var dd = IE ? '' : '--';
-  var prefix = [
-    '-webkit-',
-    '-o-',
-    '-ms-',
-    '-moz-',
-    ''
-  ];
-  var type = [
-    'animationstart',
-    'webkitAnimationStart',
-    'MSAnimationStart'
-  ];
+  var type = ['animationstart', 'webkitAnimationStart', 'MSAnimationStart'];
+  var prefix = ['-webkit-', '-o-', '-ms-', '-moz-', ''];
   var proto = QuerySelectorObserver.prototype;
+  var IE = typeof Reflect == typeof IE;
+  var dd = IE ? '' : '--';
+  var I = 0;
   proto.handleEvent = function (event) {
     if (event.animationName === this.I) {
       event.preventDefault();
@@ -65,8 +55,7 @@ var QuerySelectorObserver = (function () {
   }
   function createAnimation(selector, name) {
     for (var text = [], i = 0, length = prefix.length; i < length; i++)
-      text[i] = [
-        '',
+      text[i] = ['',
         'animation-duration:0.001s;',
         'animation-name:' + name
       ].join(prefix[i]);
