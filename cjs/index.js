@@ -1,6 +1,8 @@
 /*! (c) Andrea Giammarchi - ISC */
 var QuerySelectorObserver = (function () {
+  var IE = typeof Reflect == typeof IE;
   var I = 0;
+  var dd = IE ? '' : '--';
   var prefix = [
     '-webkit-',
     '-o-',
@@ -37,7 +39,7 @@ var QuerySelectorObserver = (function () {
   function QuerySelectorObserver(callback) {
     this.$ = callback;
     this._ = [];
-    this.I = 'selector-observer-' + I++;
+    this.I = IE ? 'outline-color' : ('selector-observer-' + I++);
   }
   function disconnectObserver(so) {
     for (var i = 0, length = type.length; i < length; i++)
@@ -53,12 +55,21 @@ var QuerySelectorObserver = (function () {
     for (var i = 0, length = type.length; i < length; i++)
       document.addEventListener(type[i], so, true);
     for (var text = [], i = 0, length = prefix.length; i < length; i++)
-      text[i] = ['@' + prefix[i] + 'keyframes ', '{from{--', ':0;}to{--', ':1;}}'].join(name);
+      text[i] = [
+        '@' + prefix[i] + 'keyframes ',
+        '{from{' + dd,
+        ':#fff;}to{' + dd,
+        ':#000;}}'
+      ].join(name);
     so._.push(style(text.join('\n')));
   }
   function createAnimation(selector, name) {
     for (var text = [], i = 0, length = prefix.length; i < length; i++)
-      text[i] = ['', 'animation-duration:0.001s;', 'animation-name:' + name].join(prefix[i]);
+      text[i] = [
+        '',
+        'animation-duration:0.001s;',
+        'animation-name:' + name
+      ].join(prefix[i]);
     return selector + '{' + text.join(';') + ';}';
   }
   function style(css) {
