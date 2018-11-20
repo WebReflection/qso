@@ -8,22 +8,22 @@
   <script src="../min.js"></script>
   <script>
   this.onload = function () {
-    var count = 1;
-    var so = new QuerySelectorObserver(function (targets) {
-      for (var i = 0, length = targets.length; i < length; i++)
-        targets[i].textContent = 'Element ' + count++ + ' has been parsed!';
-    });
-    so.observe('.some-control');
-    window.so = so;
+var count = 1;
+var so = new QuerySelectorObserver(function (records) {
+  for (var i = 0, length = records.length; i < length; i++)
+    records[i].target.textContent = 'Element ' + count++ + ' has been parsed!';
+});
+so.observe('.some-control');
+window.so = so;
 
-    setTimeout(function(){
-      var div = document.createElement('div');
-      div.setAttribute('class', 'some-control');
-      document.getElementById('test').appendChild(div);
-      setTimeout(function () {
-        so.disconnect();
-      }, 100);
-    }, 1000);
+setTimeout(function(){
+  var div = document.createElement('div');
+  div.setAttribute('class', 'some-control');
+  document.getElementById('test').appendChild(div);
+  setTimeout(function () {
+    so.disconnect();
+  }, 100);
+}, 1000);
   };
   </script>
 </head>

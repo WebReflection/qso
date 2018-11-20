@@ -4,8 +4,8 @@
 
 ```js
 var so = new QuerySelectorObserver(
-  elements => elements.forEach(el => {
-    el.textContent = 'Hello via QSO!';
+  records => records.forEach(record => {
+    record.target.textContent = 'Hello via QSO!';
   })
 );
 

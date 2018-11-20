@@ -1,12 +1,6 @@
 /*! (c) Andrea Giammarchi - ISC */
 var QuerySelectorObserver = (function () {
-  function QuerySelectorObserver(callback) {
-    this.$ = callback;
-    this._ = [];
-    this.I = 'selector-observer-' + I++;
-  }
   var I = 0;
-  var proto = QuerySelectorObserver.prototype;
   var prefix = [
     '-webkit-',
     '-o-',
@@ -19,13 +13,14 @@ var QuerySelectorObserver = (function () {
     'webkitAnimationStart',
     'MSAnimationStart'
   ];
+  var proto = QuerySelectorObserver.prototype;
   proto.handleEvent = function (event) {
     if (event.animationName === this.I) {
       event.preventDefault();
       event.stopPropagation();
       // sending an array of targets only
       // to allow batched events in the future
-      this.$([event.target]);
+      this.$([{target: event.target}]);
     }
   };
   proto.observe = function (selector) {
@@ -33,31 +28,16 @@ var QuerySelectorObserver = (function () {
     var I = this.I;
     if (!_.length)
       connectObserver(this, I);
-    var s = style();
-    s.textContent = createAnimation(selector, I);
-    _.push(s);
+    _.push(style(createAnimation(selector, I)));
   };
   proto.disconnect = function () {
     disconnectObserver(this);
   };
   return QuerySelectorObserver;
-  function style() {
-    var d = document;
-    return d.documentElement.appendChild(d.createElement('style'));
-  }
-  function createAnimation(selector, name) {
-    for (var text = [], i = 0, length = prefix.length; i < length; i++)
-      text[i] = ['', 'animation-duration:0.001s;', 'animation-name:' + name].join(prefix[i]);
-    return selector + '{' + text.join(';') + ';}';
-  }
-  function connectObserver(so, name) {
-    for (var i = 0, length = type.length; i < length; i++)
-      document.addEventListener(type[i], so, true);
-    for (var text = [], i = 0, length = prefix.length; i < length; i++)
-      text[i] = ['@' + prefix[i] + 'keyframes ', '{from{--', ':0;}to{--', ':1;}}'].join(name);
-    var s = style();
-    s.textContent = text.join('\n');
-    so._.push(s);
+  function QuerySelectorObserver(callback) {
+    this.$ = callback;
+    this._ = [];
+    this.I = 'selector-observer-' + I++;
   }
   function disconnectObserver(so) {
     for (var i = 0, length = type.length; i < length; i++)
@@ -68,6 +48,24 @@ var QuerySelectorObserver = (function () {
       if (parentNode)
         parentNode.removeChild(style);
     }
+  }
+  function connectObserver(so, name) {
+    for (var i = 0, length = type.length; i < length; i++)
+      document.addEventListener(type[i], so, true);
+    for (var text = [], i = 0, length = prefix.length; i < length; i++)
+      text[i] = ['@' + prefix[i] + 'keyframes ', '{from{--', ':0;}to{--', ':1;}}'].join(name);
+    so._.push(style(text.join('\n')));
+  }
+  function createAnimation(selector, name) {
+    for (var text = [], i = 0, length = prefix.length; i < length; i++)
+      text[i] = ['', 'animation-duration:0.001s;', 'animation-name:' + name].join(prefix[i]);
+    return selector + '{' + text.join(';') + ';}';
+  }
+  function style(css) {
+    var d = document;
+    var s = d.createElement('style');
+    s.textContent = css;
+    return d.documentElement.appendChild(s);
   }
 }());
 module.exports = QuerySelectorObserver;
