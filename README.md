@@ -5,7 +5,12 @@
 ```js
 var so = new QuerySelectorObserver(
   records => records.forEach(record => {
-    record.target.textContent = 'Hello via QSO!';
+    if (record.addedNodes.length) {
+      record.target.textContent = 'Hello via QSO!';
+      console.log(record.addedNodes);
+    } else {
+      console.log(record.removedNodes);
+    }
   })
 );
 
@@ -14,3 +19,5 @@ so.observe('#some-complex > .selector + p.cool');
 
 button.onclick = () => so.disconnect();
 ```
+
+Compatible with IE11 and other browsers, feel free to [test it live](https://webreflection.github.io/qso/test/).
