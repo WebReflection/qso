@@ -3,7 +3,7 @@ var QuerySelectorObserver = (function () {'use strict';
   var I = 0;
   var IE = typeof Reflect == typeof IE;
   var type = ['animationstart', 'webkitAnimationStart', 'MSAnimationStart'];
-  var prefix = ['-webkit-', '-o-', '-ms-', '-moz-', ''];
+  var prefix = ['', '-webkit-', '-moz-', '-ms-', '-o-'];
   var proto = QuerySelectorObserver.prototype;
   var wm = new WeakMap;
   var query = [];
