@@ -1,6 +1,6 @@
 {
   "name": "qso",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A MutationObserver like API for CSS selectors.",
   "main": "cjs/index.js",
   "module": "esm/index.js",
