@@ -1,4 +1,8 @@
-# QuerySelectorObserver
+# Deprecated: QuerySelectorObserver
+
+Please use **[qsa-observer](https://github.com/WebReflection/qsa-observer#readme)** instead, as it's been used in various other libraries, hence it's way more battle-tested, and better, than this initial attempt.
+
+- - -
 
 100% inspired by a [Daniel](https://twitter.com/csuwildcat)'s [hack](http://www.backalleycoder.com/2012/08/06/css-selector-listeners/), this module brings a friendly [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) like API to observe CSS selectors instead.
 
